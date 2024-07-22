@@ -30,7 +30,7 @@ end
 ## adding a new loading screen
 To add a new loading screen, the external file must follow this template:
 ```lua
-{
+return {
     create = function(path)
         -- this function is used to define variables that will be used during the loading screen display --
         -- like images --
