@@ -50,8 +50,9 @@ function Andromeda.newDB()
     local err
     local self = setmetatable({}, Andromeda)
     self.poll = {
-        images = {},
-        audio = {}
+        image = {},
+        audio = {},
+        video = {}
     }
     self.loadScreenAssets = {}  -- is used internally for asset management only for the loading screen
     self.queue = {}
@@ -77,7 +78,7 @@ function Andromeda:setPreloadScreen(_path)
     end
 end
 
-function Andromeda:queueLoad(_tag, _folder)
+function Andromeda:queueLoad(_folder)
     local data = _doScanFolder(_folder)
     table.insert(self.queue, data)
 end
@@ -85,6 +86,7 @@ end
 function Andromeda:initialize()
     local imgExt = { "png", "jpg", "gif", "jpeg", "tga", "bmp" }
     local audioExt = { "mp3", "wav", "midi", "ogg" }
+    local videoExt = { "ogv" }
     local coolTypes = { "nil", "boolean", "number", "string", "table" }
 
     _countItems(self)
@@ -102,10 +104,13 @@ function Andromeda:initialize()
             local rawFilename = (curPath:match("[^/]+")):gsub("%.[^.]+$", "")
             local filename = rawFilename:gsub(" ", "_")
             if _contains(imgExt, ext) then
-                self.poll.images[filename] = love.graphics.newImage(curPath)
+                self.poll.image[filename] = love.graphics.newImage(curPath)
             end
             if _contains(audioExt, ext) then
                 self.poll.audio[filename] = love.audio.newSource(curPath, "static")
+            end
+            if _contains(videoExt, ext) then
+                self.poll.video[filename] = love.graphics.newVideo(curPath)
             end
             love.graphics.clear(0, 0, 0)
                 _present(self.progress, self.max)

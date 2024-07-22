@@ -1,10 +1,9 @@
 function love.load(args)
-    inspect = require 'inspect'
     andromeda = require 'andromeda'
 
     assetdb = andromeda.newDB()
-    assetdb:queueLoad("images", "assets/images")
-    assetdb:queueLoad("audios", "assets/sounds")
+    assetdb:queueLoad("assets/images")
+    assetdb:queueLoad("assets/sounds")
     
     assetdb:initialize()
 end
